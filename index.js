@@ -107,14 +107,25 @@ function addDepartment(){
     });
 }
 function addRole(){
-    inquirer.prompt({
-        //Ask user for department name to add
-        type: "input",
-        name: "name",
-        message: "What is the role's name?"
-    }).then((data) => {
-        const sql = `INSERT INTO roles (name) VALUES (?)`;
-        db.query(sql,[data.name], (err, result) =>{
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "What is the role's name?"
+        },
+        {
+            type: "input",
+            name: "salary",
+            message: "What is the role's salary?"
+        },
+        {
+            type: "input",
+            name: "department",
+            message: "What is the role's department?"
+        }
+    ]).then((data) => {
+        const sql = `INSERT INTO roles SET ?`;
+        db.query(sql,data, (err, result) =>{
             if(!err){
                 console.log("Added successfully");
             }
@@ -123,8 +134,8 @@ function addRole(){
             }
         });
     });
-
 }
+
 function addEmployee(){
     inquirer.prompt({
         //Ask user for Employee name to add
