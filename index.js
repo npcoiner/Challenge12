@@ -107,9 +107,41 @@ function addDepartment(){
     });
 }
 function addRole(){
+    inquirer.prompt({
+        //Ask user for department name to add
+        type: "input",
+        name: "name",
+        message: "What is the role's name?"
+    }).then((data) => {
+        const sql = `INSERT INTO roles (name) VALUES (?)`;
+        db.query(sql,[data.name], (err, result) =>{
+            if(!err){
+                console.log("Added successfully");
+            }
+            else{
+                throw err;
+            }
+        });
+    });
 
 }
 function addEmployee(){
+    inquirer.prompt({
+        //Ask user for Employee name to add
+        type: "input",
+        name: "name",
+        message: "What is the employee's name?"
+    }).then((data) => {
+        const sql = `INSERT INTO employees (name) VALUES (?)`;
+        db.query(sql,[data.name], (err, result) =>{
+            if(!err){
+                console.log("Added successfully");
+            }
+            else{
+                throw err;
+            }
+        });
+    });
 
 }
 function updateEmployee(){
