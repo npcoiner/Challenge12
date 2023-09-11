@@ -85,13 +85,15 @@ function viewEmployees(){
 function addDepartment(){
     inquirer.prompt({
         //Ask user for department name to add
-
+        
     }).then((data) => {
-        const sql = `INSERT INTO departments (department_name) VALUES (?)`;
-        db.query
-    }
-
-    )
+        const sql = `INSERT INTO departments (name) VALUES (?)`;
+        db.query(sql,[data.name], (err, result) =>{
+            if(!err){
+                console.log("Added successfully");
+            };
+        });
+    });
 }
 function addRole(){
 
