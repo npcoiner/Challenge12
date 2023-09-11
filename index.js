@@ -69,21 +69,21 @@ promptUser();
 
 function viewDepartments(){
     db.query('SELECT * FROM departments', function (err, results){
-        console.log(results);
+        console.table(results);
         promptUser();
 
     });
 }
 function viewRoles(){
     db.query('SELECT * FROM roles', function (err, results){
-        console.log(results);
+        console.table(results);
         promptUser();
 
     });
 }
 function viewEmployees(){
     db.query('SELECT * FROM employees', function (err, results){
-        console.log(results);
+        console.table(results);
         promptUser();
 
     });
@@ -171,22 +171,49 @@ function addEmployee(){
     });
 
 }
-function updateEmployee(){
-    sql = `SELECt * FROM employees`;
-    db.query(sql,(err,result) => {
+function updateEmployee() {
+    const sql = `SELECT * FROM employees`;
+    db.query(sql, (err, result) => {
         const employeeChoices = result.map((employee) => ({
             name: `${employee.first_name} ${employee.last_name}`,
         }));
-      
+
         inquirer.prompt({
             type: "list",
-            name: "employee",
+            name: "employeeName",
             message: "Choose an employee:",
-            choices: employeeChoices
+            choices: employeeChoices,
         }).then((answers) => {
+            const selectedEmployeeName = answers.employeeName;
 
+            inquirer.prompt({
+            type: "input",
+            name: "newRole",
+            message: "What is the new role?"
+            }).then((data) => {
+                const newRole = data.newRole;
+
+                // Find the selected employee based on their first name and last name
+                const selectedEmployee = result.find(
+                    (employee) => `${employee.first_name} ${employee.last_name}` === selectedEmployeeName
+                );
+
+                if (!selectedEmployee) {
+                    console.error("Employee not found.");
+                    return;
+                }
+
+                const updateSql = `UPDATE employees SET role = ? WHERE first_name = ? AND last_name = ?`;
+
+                db.query(updateSql, [newRole, selectedEmployee.first_name, selectedEmployee.last_name], (updateErr, updateResult) => {
+                    if (updateErr) {
+                    console.error("Error updating employee role:", updateErr);
+                    } else {
+                    console.log(`Role updated for ${selectedEmployee.first_name} ${selectedEmployee.last_name}`);
+                    }
+                });
+            });
         });
     });
 }
-
 
