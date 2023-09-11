@@ -14,7 +14,12 @@ const db = mysql.createConnection(
     },
     console.log(`Connected to the employees_db database.`)
 );
-
+db.connect((err) => {
+    if (err) {
+      console.error('Error connecting to the database:', err);
+      return;
+    }
+});
 
 async function promptUser(){
     await inquirer.prompt([
@@ -57,15 +62,10 @@ async function promptUser(){
         }
     });
 }
-db.connect((err) => {
-    if (err) {
-      console.error('Error connecting to the database:', err);
-      return;
-    }
-});
 
 
-promptUser()
+
+promptUser();
 
 function viewDepartments(){
 
