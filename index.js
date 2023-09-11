@@ -137,14 +137,30 @@ function addRole(){
 }
 
 function addEmployee(){
-    inquirer.prompt({
-        //Ask user for Employee name to add
-        type: "input",
-        name: "name",
-        message: "What is the employee's name?"
-    }).then((data) => {
-        const sql = `INSERT INTO employees (name) VALUES (?)`;
-        db.query(sql,[data.name], (err, result) =>{
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "first_name",
+            message: "What is the employee's first name?"
+        },
+        {
+            type: "input",
+            name: "last_name",
+            message: "What is the employee's last name?"
+        },
+        {
+            type: "input",
+            name: "role",
+            message: "What is the role"
+        },
+        {
+            type: "input",
+            name: "manager",
+            message: "Who is the employee's manager?"
+        }
+    ]).then((data) => {
+        const sql = `INSERT INTO roles SET ?`;
+        db.query(sql,data, (err, result) =>{
             if(!err){
                 console.log("Added successfully");
             }
