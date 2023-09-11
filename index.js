@@ -69,29 +69,40 @@ promptUser();
 
 function viewDepartments(){
     db.query('SELECT * FROM departments', function (err, results){
-        console.log(results)
+        console.log(results);
+        promptUser();
+
     });
 }
 function viewRoles(){
     db.query('SELECT * FROM roles', function (err, results){
-        console.log(results)
+        console.log(results);
+        promptUser();
+
     });
 }
 function viewEmployees(){
     db.query('SELECT * FROM employees', function (err, results){
-        console.log(results)
+        console.log(results);
+        promptUser();
+
     });
 }
 function addDepartment(){
     inquirer.prompt({
         //Ask user for department name to add
-        
+        type: "input",
+        name: "name",
+        message: "What is the department's name?"
     }).then((data) => {
         const sql = `INSERT INTO departments (name) VALUES (?)`;
         db.query(sql,[data.name], (err, result) =>{
             if(!err){
                 console.log("Added successfully");
-            };
+            }
+            else{
+                throw err;
+            }
         });
     });
 }
