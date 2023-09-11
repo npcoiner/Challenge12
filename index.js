@@ -68,16 +68,30 @@ async function promptUser(){
 promptUser();
 
 function viewDepartments(){
-
+    db.query('SELECT * FROM departments', function (err, results){
+        console.log(results)
+    });
 }
 function viewRoles(){
-
+    db.query('SELECT * FROM roles', function (err, results){
+        console.log(results)
+    });
 }
 function viewEmployees(){
-
+    db.query('SELECT * FROM employees', function (err, results){
+        console.log(results)
+    });
 }
 function addDepartment(){
+    inquirer.prompt({
+        //Ask user for department name to add
 
+    }).then((data) => {
+        const sql = `INSERT INTO departments (department_name) VALUES (?)`;
+        db.query
+    }
+
+    )
 }
 function addRole(){
 
