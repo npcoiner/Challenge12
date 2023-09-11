@@ -159,7 +159,7 @@ function addEmployee(){
             message: "Who is the employee's manager?"
         }
     ]).then((data) => {
-        const sql = `INSERT INTO roles SET ?`;
+        const sql = `INSERT INTO employees SET ?`;
         db.query(sql,data, (err, result) =>{
             if(!err){
                 console.log("Added successfully");
@@ -172,7 +172,21 @@ function addEmployee(){
 
 }
 function updateEmployee(){
+    sql = `SELECt * FROM employees`;
+    db.query(sql,(err,result) => {
+        const employeeChoices = result.map((employee) => ({
+            name: `${employee.first_name} ${employee.last_name}`,
+        }));
+      
+        inquirer.prompt({
+            type: "list",
+            name: "employee",
+            message: "Choose an employee:",
+            choices: employeeChoices
+        }).then((answers) => {
 
+        });
+    });
 }
 
 
